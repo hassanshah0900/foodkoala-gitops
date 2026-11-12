@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: order-service
+  labels:
+    app.kubernetes.io/name: order-service
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: foodkoala
+data:
+  NODE_ENV: "production"
+  PORT: "3006"
+  CART_SERVICE_URL: "http://cart-service:3005"
+  USER_SERVICE_URL: "http://user-service:3002"
+  RESTAURANT_SERVICE_URL: "http://restaurant-service:3003"
+  SERVICE_TIMEOUT_MS: "3000"
+  RIDE_MINUTES: "15"
+  ACCEPT_TIMEOUT_MINUTES: "10"
+  ACCEPT_CHECK_MS: "15000"
+  REVIEW_WINDOW_DAYS: "7"
+  KAFKA_BROKERS: "kafka:29092"
+  KAFKA_CLIENT_ID: "order-service"
+  KAFKA_GROUP_ID: "order-service"
+  OUTBOX_POLL_MS: "500"
+  OUTBOX_BATCH_SIZE: "100"
+  OUTBOX_RETENTION_DAYS: "7"
