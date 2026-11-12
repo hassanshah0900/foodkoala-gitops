@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: delivery-service
+  labels:
+    app.kubernetes.io/name: delivery-service
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: foodkoala
+data:
+  PORT: "8081"
+  KAFKA_BROKERS: "kafka:29092"
+  KAFKA_GROUP_ID: "delivery-service"
+  ASSIGN_EVERY: "3s"
+  MAX_PICKUP_KM: "5"
+  LOCATION_FRESH_FOR: "5m"
+  OUTBOX_POLL_EVERY: "500ms"
