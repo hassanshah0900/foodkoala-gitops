@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: menu-service
+  labels:
+    app.kubernetes.io/name: menu-service
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: foodkoala
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: menu-service
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: menu-service
+        app.kubernetes.io/component: api
+        app.kubernetes.io/part-of: foodkoala
+    spec:
+      serviceAccountName: menu-service
+      containers:
+        - name: menu-service
+          image: ghcr.io/foodkoala/menu-service:<tag> # image tag will be set using ArgoCD later
+          ports:
+            - name: http
+              containerPort: 3004
+          envFrom:
+            - configMapRef:
+                name: menu-service
+            - secretRef:
+                name: menu-service
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
+          resources: {} # resource requests/limits will be set later
