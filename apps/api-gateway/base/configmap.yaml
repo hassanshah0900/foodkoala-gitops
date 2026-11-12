@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-gateway
+  labels:
+    app.kubernetes.io/name: api-gateway
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: foodkoala
+data:
+  PORT: "8080"
+  JWT_ISSUER: "foodkoala-auth"
+  JWT_AUDIENCE: "foodkoala"
+  AUTH_SERVICE_URL: "http://auth-service:3001"
+  USER_SERVICE_URL: "http://user-service:3002"
+  RESTAURANT_SERVICE_URL: "http://restaurant-service:3003"
+  MENU_SERVICE_URL: "http://menu-service:3004"
+  CART_SERVICE_URL: "http://cart-service:3005"
+  ORDER_SERVICE_URL: "http://order-service:3006"
+  NOTIFICATION_SERVICE_URL: "http://notification-service:3007"
+  DELIVERY_SERVICE_URL: "http://delivery-service:8081"
+  TRACKING_SERVICE_URL: "http://tracking-service:8082"
+  CHAT_SERVICE_URL: "http://chat-service:8083"
+  PAYMENT_SERVICE_URL: "http://payment-service:8001"
+  SEARCH_SERVICE_URL: "http://search-service:8002"
