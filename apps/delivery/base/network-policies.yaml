@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: delivery-service-default-deny
+  labels:
+    app.kubernetes.io/name: delivery-service
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: foodkoala
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: delivery-service
+  policyTypes:
+    - Ingress
+    - Egress
