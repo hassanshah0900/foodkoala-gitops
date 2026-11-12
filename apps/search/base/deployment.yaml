@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: search-service
+  labels:
+    app.kubernetes.io/name: search-service
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: foodkoala
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: search-service
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: search-service
+        app.kubernetes.io/component: api
+        app.kubernetes.io/part-of: foodkoala
+    spec:
+      serviceAccountName: search-service
+      containers:
+        - name: search-service
+          image: ghcr.io/foodkoala/search-service:<tag> # image tag will be set using ArgoCD later
+          ports:
+            - name: http
+              containerPort: 8002
+          envFrom:
+            - configMapRef:
+                name: search-service
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
+          resources: {} # resource requests/limits will be set later
