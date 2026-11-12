@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cart-service
+  labels:
+    app.kubernetes.io/name: cart-service
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: foodkoala
+data:
+  NODE_ENV: "production"
+  PORT: "3005"
+  MENU_SERVICE_URL: "http://menu-service:3004"
+  MENU_SERVICE_TIMEOUT_MS: "3000"
+  ORDER_SERVICE_URL: "http://order-service:3006"
+  ORDER_SERVICE_TIMEOUT_MS: "3000"
+  CART_TTL_DAYS: "7"
+  MAX_CART_LINES: "50"
