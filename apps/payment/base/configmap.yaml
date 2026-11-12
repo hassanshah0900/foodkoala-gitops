@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: payment-service
+  labels:
+    app.kubernetes.io/name: payment-service
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: foodkoala
+data:
+  PORT: "8001"
+  KAFKA_BROKERS: "kafka:29092"
+  KAFKA_GROUP_ID: "payment-service"
