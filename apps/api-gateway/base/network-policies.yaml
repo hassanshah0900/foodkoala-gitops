@@ -64,3 +64,26 @@ spec:
       ports:
         - protocol: TCP
           port: 3001
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: api-gateway-allow-egress-user-service
+  labels:
+    app.kubernetes.io/name: api-gateway
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: foodkoala
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: api-gateway
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: user-service
+      ports:
+        - protocol: TCP
+          port: 3002
