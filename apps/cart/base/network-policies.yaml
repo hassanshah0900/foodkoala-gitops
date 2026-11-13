@@ -64,3 +64,72 @@ spec:
       ports:
         - protocol: TCP
           port: 3005
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: cart-service-allow-ingress-order-service
+  labels:
+    app.kubernetes.io/name: cart-service
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: foodkoala
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: cart-service
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: order-service
+      ports:
+        - protocol: TCP
+          port: 3005
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: cart-service-allow-egress-menu-service
+  labels:
+    app.kubernetes.io/name: cart-service
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: foodkoala
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: cart-service
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: menu-service
+      ports:
+        - protocol: TCP
+          port: 3004
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: cart-service-allow-egress-order-service
+  labels:
+    app.kubernetes.io/name: cart-service
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: foodkoala
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: cart-service
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: order-service
+      ports:
+        - protocol: TCP
+          port: 3006
