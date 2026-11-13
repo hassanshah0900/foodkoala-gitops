@@ -64,3 +64,72 @@ spec:
       ports:
         - protocol: TCP
           port: 3003
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: restaurant-service-allow-ingress-order-service
+  labels:
+    app.kubernetes.io/name: restaurant-service
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: foodkoala
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: restaurant-service
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: order-service
+      ports:
+        - protocol: TCP
+          port: 3003
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: restaurant-service-allow-ingress-menu-service
+  labels:
+    app.kubernetes.io/name: restaurant-service
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: foodkoala
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: restaurant-service
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: menu-service
+      ports:
+        - protocol: TCP
+          port: 3003
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: restaurant-service-allow-ingress-user-service
+  labels:
+    app.kubernetes.io/name: restaurant-service
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: foodkoala
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: restaurant-service
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: user-service
+      ports:
+        - protocol: TCP
+          port: 3003
