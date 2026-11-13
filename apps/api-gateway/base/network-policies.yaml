@@ -156,3 +156,26 @@ spec:
       ports:
         - protocol: TCP
           port: 3005
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: api-gateway-allow-egress-order-service
+  labels:
+    app.kubernetes.io/name: api-gateway
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: foodkoala
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: api-gateway
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: order-service
+      ports:
+        - protocol: TCP
+          port: 3006
